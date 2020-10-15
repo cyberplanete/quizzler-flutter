@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'quizBrain.dart';
 
 void main() => runApp(Quizzler());
 
@@ -35,6 +36,9 @@ class _QuizPageState extends State<QuizPage> {
     color: Colors.red,
   );
   List<Icon> listIcons = [];
+
+  QuizBrain quizBrain = QuizBrain();
+
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -46,7 +50,7 @@ class _QuizPageState extends State<QuizPage> {
             padding: EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                'This is where the question text will go.',
+                quizBrain.getQuestionText(),
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 25.0,
@@ -71,7 +75,12 @@ class _QuizPageState extends State<QuizPage> {
               ),
               onPressed: () {
                 setState(() {
-                  listIcons.add(iconTrue);
+                  if (quizBrain.getQuestionAnswer() == true) {
+                    listIcons.add(iconTrue);
+                  } else {
+                    listIcons.add(iconFalse);
+                  }
+                  quizBrain.nextQuestion();
                 });
                 //The user picked true.
               },
@@ -92,7 +101,12 @@ class _QuizPageState extends State<QuizPage> {
               ),
               onPressed: () {
                 setState(() {
-                  listIcons.add(iconFalse);
+                  if (quizBrain.getQuestionAnswer() == false) {
+                    listIcons.add(iconTrue);
+                  } else {
+                    listIcons.add(iconFalse);
+                  }
+                  quizBrain.nextQuestion();
                 });
                 //The user picked false.
               },
