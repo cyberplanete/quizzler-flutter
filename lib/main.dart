@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'quizBrain.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 void main() => runApp(Quizzler());
 
@@ -80,7 +81,7 @@ class _QuizPageState extends State<QuizPage> {
                   } else {
                     listIcons.add(iconFalse);
                   }
-                  quizBrain.nextQuestion();
+                  isNextQuestion(quizBrain.nextQuestionOrAlert());
                 });
                 //The user picked true.
               },
@@ -106,7 +107,7 @@ class _QuizPageState extends State<QuizPage> {
                   } else {
                     listIcons.add(iconFalse);
                   }
-                  quizBrain.nextQuestion();
+                  isNextQuestion(quizBrain.nextQuestionOrAlert());
                 });
                 //The user picked false.
               },
@@ -118,6 +119,25 @@ class _QuizPageState extends State<QuizPage> {
         )
       ],
     );
+  }
+
+//Est ce la fin du quiz ? si oui j'affiche une alerte et reset le compteur à 0
+  void isNextQuestion(bool nextQuestionOrAlert) {
+    if (nextQuestionOrAlert) {
+      Alert(
+          context: context,
+          title: "Fin du Quiz",
+          desc: "Plus de question !!",
+          buttons: [
+            DialogButton(
+                child: Text(
+                  "OK",
+                  style: TextStyle(color: Colors.white, fontSize: 20),
+                ),
+                onPressed: () => Navigator.pop(context))
+          ]).show();
+      listIcons = [];
+    }
   }
 }
 

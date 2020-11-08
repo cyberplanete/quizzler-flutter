@@ -31,9 +31,13 @@ class QuizBrain {
         true),
   ];
 
-  void nextQuestion() {
+  bool nextQuestionOrAlert() {
     if (indexOfListOfQuestions < _questionBank.length - 1) {
       indexOfListOfQuestions++;
+      return false;
+    } else {
+      indexOfListOfQuestions = 0;
+      return true;
     }
   }
 
